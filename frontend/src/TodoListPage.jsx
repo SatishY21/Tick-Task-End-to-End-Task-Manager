@@ -73,27 +73,7 @@ function TodoListPage({ user, onLogout }) { // Assuming you add onLogout back fo
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
       
-      {/* Dynamic Header */}
-      <div className="flex justify-between items-center pb-4 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-800">
-          {user ? <>Welcome, <span className="text-blue-600">{user.username}!</span></> : "Todo App"}
-        </h1>
-        {user ? (
-          <button 
-            onClick={onLogout} 
-            className="px-4 py-2 font-semibold text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link 
-            to="/login"
-            className="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Login
-          </Link>
-        )}
-      </div>
+    
 
       {/* Dynamic Content */}
       {user ? (
