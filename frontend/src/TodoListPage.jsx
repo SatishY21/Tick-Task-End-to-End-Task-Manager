@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for the login button
+import { Link } from 'react-router-dom';
 
-function TodoListPage({ user }) {
+// The 'user' prop is passed down from App.jsx
+function TodoListPage({ user, onLogout }) { // Assuming you add onLogout back for the header
   const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
+  // Define the API URL from environment variables
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // Function to fetch todos from the backend
   const fetchTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/todos/${user.id}`);
+      // Use the apiUrl variable in the fetch call
+      const response = await fetch(`${apiUrl}/api/todos/${user.id}`);
       const data = await response.json();
       setTodos(data);
     } catch (error) {
@@ -30,12 +35,13 @@ function TodoListPage({ user }) {
     }
   }, [user]);
 
-  // Handler functions (handleAddTodo, etc.) remain the same
+  // Handler for adding a new todo
   const handleAddTodo = async (e) => {
     e.preventDefault();
     if (!newTodoText.trim()) return;
 
-    const response = await fetch('http://localhost:3001/api/todos', {
+    // Use the apiUrl variable
+    const response = await fetch(`${apiUrl}/api/todos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: newTodoText, userId: user.id }),
@@ -44,28 +50,52 @@ function TodoListPage({ user }) {
     setTodos([...todos, newTodo]);
     setNewTodoText('');
   };
-
+  
+  // Handler for toggling a todo's completed status
   const handleToggleComplete = async (todoId) => {
-    const response = await fetch(`http://localhost:3001/api/todos/${todoId}`, {
+    // Use the apiUrl variable
+    const response = await fetch(`${apiUrl}/api/todos/${todoId}`, {
       method: 'PUT',
     });
     const updatedTodo = await response.json();
     setTodos(todos.map(todo => todo._id === updatedTodo._id ? updatedTodo : todo));
   };
   
+  // Handler for deleting a todo
   const handleDeleteTodo = async (todoId) => {
-    await fetch(`http://localhost:3001/api/todos/${todoId}`, {
+    // Use the apiUrl variable
+    await fetch(`${apiUrl}/api/todos/${todoId}`, {
         method: 'DELETE',
     });
     setTodos(todos.filter(todo => todo._id !== todoId));
   };
 
-
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
       
+      {/* Dynamic Header */}
+      <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+        <h1 className="text-2xl font-bold text-gray-800">
+          {user ? <>Welcome, <span className="text-blue-600">{user.username}!</span></> : "Todo App"}
+        </h1>
+        {user ? (
+          <button 
+            onClick={onLogout} 
+            className="px-4 py-2 font-semibold text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link 
+            to="/login"
+            className="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Login
+          </Link>
+        )}
+      </div>
 
-      {/* ## DYNAMIC CONTENT ## */}
+      {/* Dynamic Content */}
       {user ? (
         // Renders the todo manager if user is logged in
         <>
