@@ -51,13 +51,7 @@ To run this project on your local machine, follow these steps.
 - [Node.js](https://nodejs.org/en/download/) installed
 - A free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account
 
-### 1. Clone the Repository
-
-```bash
-git clone [https://github.com/SatishY21/Tick-Task-End-to-End-Task-Manager.git](https://github.com/SatishY21/Tick-Task-End-to-End-Task-Manager.git)
-cd Tick-Task-End-to-End-Task-Manager
-
-🌐 Deployment
+###🌐 Deployment
 This project is deployed using a decoupled architecture for optimal performance and scalability.
 
 Frontend: The React application is hosted on Vercel, providing a fast global CDN for static assets.
@@ -67,3 +61,11 @@ Backend: The Node.js API is hosted as a Web Service on Render, which automatical
 Database: MongoDB Atlas serves as the cloud database, accessible from the hosted backend.
 
 This setup ensures a professional, scalable, and cost-effective hosting solution.
+
+### 1. Clone the Repository
+
+```bash
+git clone [https://github.com/SatishY21/Tick-Task-End-to-End-Task-Manager.git](https://github.com/SatishY21/Tick-Task-End-to-End-Task-Manager.git)
+cd Tick-Task-End-to-End-Task-Manager
+
+
